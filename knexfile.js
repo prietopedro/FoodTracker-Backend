@@ -1,5 +1,5 @@
 // Update with your config settings.
-
+require("dotenv");
 module.exports = {
   development: {
     client: "sqlite3",
