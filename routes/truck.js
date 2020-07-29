@@ -3,6 +3,7 @@ const TruckController = require("../controllers/truckController");
 const validateTruck = require("../middleware/validateTruck");
 const createTruckRequirements = require("../middleware/createTruckRequirements");
 const editTruckRequirements = require("../middleware/editTruckRequirements");
+const createMenuItemRequirements = require("../middleware/createMenuItemRequirements");
 
 const router = express.Router();
 
@@ -23,4 +24,9 @@ router.delete(
   TruckController.removeFromFavorites
 );
 router.post("/ratings/:id", [validateTruck], TruckController.rateTruck);
+router.post(
+  "/food/:id",
+  [validateTruck, createMenuItemRequirements],
+  TruckController.rateTruck
+);
 module.exports = router;

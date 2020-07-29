@@ -27,12 +27,15 @@ const createTruckRequirements = async (req, res, next) => {
       truck_description: req.body.truck_description.toLowerCase() || null,
       truck_photo: req.body.truck_photo || null,
       operator_id: req.user.id,
+      price_range: req.body.price_range || null,
     };
     req.locationData = {
       location_zip_code: req.body.location_zip_code,
       location_city: req.body.location_city.toLowerCase(),
       location_address: req.body.location_address.toLowerCase(),
       location_state: req.body.location_state.toLowerCase(),
+      longitude: req.body.longitude || null,
+      latitude: req.body.latitude || null,
     };
     next();
   } catch (error) {

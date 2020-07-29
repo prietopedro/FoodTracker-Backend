@@ -1,36 +1,29 @@
 const createMenuItemRequirements = async (req, res, next) => {
-  //   try {
-  //     const required = ["menu_item_name"];
-  //     for (requiredField of required) {
-  //       if (!req.body[requiredField]) {
-  //         return res
-  //           .status(400)
-  //           .json({ error: `${requiredField} is a requiredField` });
-  //       }
-  //     }
-  //     if (req.user.user_role !== "operator") {
-  //       return res.status(400).json({ error: "User must be an operator" });
-  //     }
-  //     req.truckData = {
-  //       truck_name: req.body.truck_name.toLowerCase(),
-  //       truck_departure_time: req.body.truck_departure_time,
-  //       truck_arrival_time: req.body.truck_arrival_time,
-  //       truck_cuisine_type: req.body.truck_cuisine_type.toLowerCase() || null,
-  //       truck_description: req.body.truck_description.toLowerCase() || null,
-  //       truck_photo: req.body.truck_photo || null,
-  //       operator_id: req.user.id,
-  //     };
-  //     req.locationData = {
-  //       location_zip_code: req.body.location_zip_code,
-  //       location_city: req.body.location_city.toLowerCase(),
-  //       location_address: req.body.location_address.toLowerCase(),
-  //       location_state: req.body.location_state.toLowerCase(),
-  //     };
-  //     next();
-  //   } catch (error) {
-  //     console.log(error);
-  //     return res.status(500).json({ error: "Server is malfunctioning" });
-  //   }
+  try {
+    const required = ["menu_item_name"];
+    for (requiredField of required) {
+      if (!req.body[requiredField]) {
+        return res
+          .status(400)
+          .json({ error: `${requiredField} is a requiredField` });
+      }
+    }
+    if (req.user.id !== req.truck.id) {
+      return res
+        .status(400)
+        .json({ error: "Must be the owner to add a menu item" });
+    }
+    req.foodItem = {
+      menu_item_name: req.body.menu_item_name,
+      menu_item_description: req.body.menu_item_description || null,
+      menu_item_photo: req.body.menu_item_photo || null,
+      menu_item_price: req.body.menu_item_price || null,
+    };
+    next();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Server is malfunctioning" });
+  }
 };
 
-module.exports = createMenuItemsRequirements;
+module.exports = createMenuItemRequirements;

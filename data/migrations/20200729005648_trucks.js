@@ -7,6 +7,7 @@ exports.up = function (knex) {
     tbl.string("truck_cuisine_type");
     tbl.string("truck_description");
     tbl.string("truck_photo");
+    tbl.string("price_range");
     tbl
       .integer("operator_id")
       .unsigned()

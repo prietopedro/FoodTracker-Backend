@@ -3,6 +3,7 @@ const UserFavoriteTruck = require("../models/UserFavoriteTruck");
 const TruckRating = require("../models/TruckRating");
 const addTruckRatings = require("../utils/addTruckRatings");
 const addMenuItems = require("../utils/addMenuItems");
+const FoodItem = require("../models/FoodItem");
 
 const addTruck = async (req, res) => {
   try {
@@ -111,6 +112,8 @@ const rateTruck = async (req, res) => {
 
 const addFoodToTruck = async (req, res) => {
   try {
+    const item = await FoodItem.insert(req.foodItem);
+    return res.status(201).json(item);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Server mafunctioning" });
@@ -126,4 +129,5 @@ module.exports = {
   addToFavorites,
   removeFromFavorites,
   rateTruck,
+  addFoodToTruck,
 };
