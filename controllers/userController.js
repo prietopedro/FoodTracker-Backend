@@ -1,14 +1,15 @@
 const User = require("../models/User");
-var jwt = require("jsonwebtoken");
+const addFavoritesAndOwned = require("../utils/addFavoritesAndOwned");
+const createToken = require("../utils/createToken");
+const addTruckRatings = require("../utils/addTruckRatings");
+const addMenuItems = require("../utils/addMenuItems");
 
 const registerUser = async (req, res) => {
   try {
     const user = await User.insert(req.body);
-    var token = jwt.sign(
-      { id: user.id, user_role: user.user_role },
-      process.env.SECRET_JWT
-    );
+    const token = await createToken(user);
     delete user.password;
+    await addFavoritesAndOwned(user);
     return res.status(201).json({ user, token });
   } catch (error) {
     console.log(error);
@@ -16,21 +17,20 @@ const registerUser = async (req, res) => {
   }
 };
 
-const loginUser = (req, res) => {
+const loginUser = async (req, res) => {
   try {
-    var token = jwt.sign(
-      { id: req.user.id, user_role: req.user.user_role },
-      process.env.SECRET_JWT
-    );
+    const token = await createToken(req.user);
     delete req.user.password;
+    await addFavoritesAndOwned(req.user);
     return res.status(200).json({ user: req.user, token });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Server is malfunctioning" });
   }
 };
-const getUser = (req, res) => {
+const getUser = async (req, res) => {
   delete req.user.password;
+  await addFavoritesAndOwned(req.user);
   return res.status(200).json(req.user);
 };
 const editUser = async (req, res) => {
@@ -44,6 +44,7 @@ const editUser = async (req, res) => {
     };
     const user = await User.update(edit, req.user.id);
     delete user.password;
+    await addFavoritesAndOwned(user);
     return res.status(200).json(user);
   } catch (error) {
     console.log(error);
