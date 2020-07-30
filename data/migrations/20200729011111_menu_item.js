@@ -4,7 +4,7 @@ exports.up = function (knex) {
     tbl.string("menu_item_name").notNullable();
     tbl.string("menu_item_description");
     tbl.string("menu_item_photo");
-    tbl.integer("menu_item_price");
+    tbl.float("menu_item_price");
     tbl
       .integer("truck_id")
       .unsigned()
