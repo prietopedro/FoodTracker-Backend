@@ -12,8 +12,12 @@ const findByUsername = (username) => {
 };
 
 const insert = async (user) => {
-  const [id] = await db("users").insert(user);
-  return findById(id);
+  try {
+    const [id] = await db("users").insert(user);
+    return findById(id);
+  } catch (error) {
+    console.log(error);
+  }
 };
 const update = async (user, id) => {
   await db("users").update(user).where({ id }).select("*");
