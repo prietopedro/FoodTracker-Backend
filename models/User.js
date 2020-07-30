@@ -15,7 +15,7 @@ const insert = async (user) => {
   try {
     const [res] = await db("users").insert(user).returning("id");
     console.log("RESSS", res);
-    return findById(id);
+    return findById(res);
   } catch (error) {
     console.log(error);
   }
