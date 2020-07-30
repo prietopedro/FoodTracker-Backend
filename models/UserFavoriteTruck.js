@@ -7,7 +7,9 @@ const findAllByUserId = (user_id) => {
   return db("user_trucks_favorites").where({ user_id });
 };
 const insert = async (truck_id, user_id) => {
-  await db("user_trucks_favorites").insert({ truck_id, user_id });
+  await db("user_trucks_favorites")
+    .insert({ truck_id, user_id })
+    .returning("id");
 };
 
 const remove = (truck_id, user_id) => {
