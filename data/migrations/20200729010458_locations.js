@@ -4,8 +4,8 @@ exports.up = function (knex) {
     tbl.string("location_city").notNullable();
     tbl.string("location_address").notNullable();
     tbl.string("location_state").notNullable();
-    tbl.integer("longitude");
-    tbl.integer("latitude");
+    tbl.float("longitude");
+    tbl.float("latitude");
     tbl
       .integer("truck_id")
       .unsigned()
