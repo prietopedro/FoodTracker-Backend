@@ -1,6 +1,7 @@
 const express = require("express");
 const TruckController = require("../controllers/truckController");
 const validateTruck = require("../middleware/validateTruck");
+const validateToken = require("../middleware/validateToken");
 const createTruckRequirements = require("../middleware/createTruckRequirements");
 const editTruckRequirements = require("../middleware/editTruckRequirements");
 const createMenuItemRequirements = require("../middleware/createMenuItemRequirements");
@@ -9,9 +10,10 @@ const editFoodItemRequirements = require("../middleware/editFoodItemRequirements
 
 const router = express.Router();
 
-router.post("/", [createTruckRequirements], TruckController.addTruck);
 router.get("/", TruckController.getTrucks);
 router.get("/:id", [validateTruck], TruckController.getTruckById);
+router.use(validateToken);
+router.post("/", [createTruckRequirements], TruckController.addTruck);
 router.put(
   "/:id",
   [validateTruck, editTruckRequirements],

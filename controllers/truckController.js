@@ -8,7 +8,8 @@ const FoodItem = require("../models/FoodItem");
 const addTruck = async (req, res) => {
   try {
     const truck = await Truck.insert(req.truckData, req.locationData);
-    await addTruckRatings([truck], req.user.id);
+    const user_id = req.user ? req.user.id : null;
+    await addTruckRatings([truck], user_id);
     await addMenuItems([truck]);
     return res.status(201).json(truck);
   } catch (error) {
@@ -20,7 +21,8 @@ const addTruck = async (req, res) => {
 const getTrucks = async (req, res) => {
   try {
     const trucks = await Truck.find(req.query);
-    await addTruckRatings(trucks, req.user.id);
+    const user_id = req.user ? req.user.id : null;
+    await addTruckRatings(trucks, user_id);
     await addMenuItems(trucks);
     return res.status(200).json(trucks);
   } catch (error) {

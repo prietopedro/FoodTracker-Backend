@@ -2,8 +2,10 @@ const TruckRating = require("../models/TruckRating");
 
 const addTruckRatings = async (trucks, userId) => {
   for (let i = 0; i < trucks.length; i++) {
-    const userRating = await TruckRating.find(userId, trucks[i].id);
-    trucks[i].userRating = userRating ? userRating.rating : null;
+    if (userId) {
+      const userRating = await TruckRating.find(userId, trucks[i].id);
+      trucks[i].userRating = userRating ? userRating.rating : null;
+    }
     let average = await TruckRating.findByTruckId(trucks[i].id);
     average = average.map((x) => x.rating);
     average = Math.round(
