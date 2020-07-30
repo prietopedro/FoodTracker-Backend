@@ -35,7 +35,7 @@ const find = (params) => {
 };
 
 const insert = async (truckData, location) => {
-  const [truck_id] = await db("trucks").insert(truckData);
+  const [truck_id] = await db("trucks").insert(truckData).returning("id");
   await db("truck_locations").insert({ ...location, truck_id });
   return findById(truck_id);
 };

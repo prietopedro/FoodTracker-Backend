@@ -9,7 +9,9 @@ const findByTruckId = (truck_id) => {
 };
 
 const insert = (user_id, truck_id, rating) => {
-  return db("truck_ratings").insert({ user_id, truck_id, rating });
+  return db("truck_ratings")
+    .insert({ user_id, truck_id, rating })
+    .returning("*");
 };
 
 const update = async (user_id, truck_id, rating) => {
