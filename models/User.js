@@ -12,7 +12,7 @@ const findByUsername = (username) => {
 };
 
 const insert = async (user) => {
-  const id = await db("users").insert(user);
+  const id = await db("users").insert(user).returning("id");
   console.log(id);
   return findById(id.id);
 };
