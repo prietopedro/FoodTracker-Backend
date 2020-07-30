@@ -8,7 +8,7 @@ const createMenuItemRequirements = async (req, res, next) => {
           .json({ error: `${requiredField} is a requiredField` });
       }
     }
-    if (req.user.id !== req.truck.id) {
+    if (req.user.id !== req.truck.operator_id) {
       return res
         .status(400)
         .json({ error: "Must be the owner to add a menu item" });
@@ -18,6 +18,7 @@ const createMenuItemRequirements = async (req, res, next) => {
       menu_item_description: req.body.menu_item_description || null,
       menu_item_photo: req.body.menu_item_photo || null,
       menu_item_price: req.body.menu_item_price || null,
+      truck_id: req.truck.id,
     };
     next();
   } catch (error) {

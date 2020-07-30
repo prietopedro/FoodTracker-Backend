@@ -120,6 +120,31 @@ const addFoodToTruck = async (req, res) => {
   }
 };
 
+const editFood = async (req, res) => {
+  try {
+    if (req.truck.operator_id !== req.user.id)
+      return res.status(400).json({ error: "Must be owner to delete food" });
+    await FoodItem.update(req.foodItem, req.food.id);
+    const food = await FoodItem.findById(req.food.id);
+    return res.status(200).json(food);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Server mafunctioning" });
+  }
+};
+
+const deleteFood = async (req, res) => {
+  try {
+    if (req.truck.operator_id !== req.user.id)
+      return res.status(400).json({ error: "Must be owner to delete food" });
+    await FoodItem.remove(req.food.id);
+    return res.status(200).json({ message: "Deleted" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Server mafunctioning" });
+  }
+};
+
 module.exports = {
   addTruck,
   getTrucks,
@@ -130,4 +155,6 @@ module.exports = {
   removeFromFavorites,
   rateTruck,
   addFoodToTruck,
+  deleteFood,
+  editFood,
 };
