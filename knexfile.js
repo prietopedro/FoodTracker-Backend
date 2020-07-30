@@ -28,10 +28,8 @@ module.exports = {
   },
 
   production: {
-    client: "sqlite3",
-    connection: {
-      filename: "./data/prod.sqlite3",
-    },
+    client: "pg",
+    connection: process.env.DATABASE_URL,
     migrations: {
       directory: "./data/migrations",
     },
