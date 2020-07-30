@@ -20,6 +20,7 @@ const insert = async (user) => {
     console.log(error);
   }
 };
+
 const update = async (user, id) => {
   await db("users").update(user).where({ id }).select("*");
   return findById(id);
