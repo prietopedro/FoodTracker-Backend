@@ -30,7 +30,7 @@ module.exports = {
   production: {
     client: "sqlite3",
     connection: {
-      filename: "./data/dev.sqlite3",
+      filename: "./data/prod.sqlite3",
     },
     migrations: {
       directory: "./data/migrations",

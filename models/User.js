@@ -12,8 +12,8 @@ const findByUsername = (username) => {
 };
 
 const insert = async (user) => {
-  const [id] = await db("users").insert(user).returning("id");
-  return findById(id.id);
+  const [id] = await db("users").insert(user);
+  return findById(id);
 };
 const update = async (user, id) => {
   await db("users").update(user).where({ id }).select("*");

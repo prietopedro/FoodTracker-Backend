@@ -9,7 +9,7 @@ const findAllByTruckId = (truck_id) => {
 };
 
 const insert = async (food) => {
-  const [id] = await db("menu_item").insert(food).returning("id");
+  const [id] = await db("menu_item").insert(food);
   return findById(id);
 };
 const update = async (food, id) => {
